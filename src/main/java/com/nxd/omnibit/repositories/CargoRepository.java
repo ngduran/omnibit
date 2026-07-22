@@ -1,6 +1,7 @@
 package com.nxd.omnibit.repositories;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,4 +18,7 @@ public interface CargoRepository extends JpaRepository<Cargo, Long> {
 
     @Transactional(readOnly = true)
     boolean existsByNome(String nome);
+
+    Optional<Cargo> findByUuid(UUID uuid);
+
 }
