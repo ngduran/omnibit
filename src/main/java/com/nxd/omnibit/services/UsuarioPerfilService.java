@@ -29,11 +29,11 @@ public class UsuarioPerfilService {
 
     @Transactional
     public UsuarioPerfil salvarOuAtualizar(UsuarioPerfilDTO dto) {
-        // 1. Busca o cargo utilizando o UUID fornecido no DTO
+        // 1. Busca o cargo utilizando o UUID fornecido no DTO[cite: 6]
         Cargo cargo = cargoRepository.findByUuid(dto.cargoUuid())
             .orElseThrow(() -> new RuntimeException("Cargo não encontrado através do UUID fornecido."));
 
-        // 2. Executa o fluxo de Upsert (Atualiza se existir, ou instancia via Mapper se não existir)
+        // 2. Executa o fluxo de Upsert[cite: 6]
         UsuarioPerfil perfil = usuarioPerfilRepository.findByAuthUuid(dto.authUuid())
             .map(perfilExistente -> {
                 perfilExistente.setCargo(cargo);
@@ -41,12 +41,13 @@ public class UsuarioPerfilService {
             })
             .orElseGet(() -> usuarioPerfilMapper.toEntity(dto, cargo));
 
-        // 3. Persiste as alterações no banco de dados e retorna a entidade salva
+        // 3. Persiste as alterações no banco de dados e retorna a entidade salva[cite: 6]
         return usuarioPerfilRepository.save(perfil);
     }
 
     @Transactional(readOnly = true)
     public List<UsuarioPerfil> listarUsuariosPerfils() {
-        return usuarioPerfilRepository.findAll();
+        // Utiliza o JOIN FETCH para garantir que o Cargo seja carregado sem erros de Lazy Loading
+        return usuarioPerfilRepository.findAllWithCargo();
     }
 }

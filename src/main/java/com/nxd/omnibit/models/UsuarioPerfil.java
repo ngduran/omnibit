@@ -2,6 +2,7 @@ package com.nxd.omnibit.models;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,7 +24,7 @@ public class UsuarioPerfil implements Serializable {
     private Long id;
 
     @Column(name = "auth_uuid", unique = true, nullable = false, updatable = false, columnDefinition = "BINARY(16)")
-    private String authUuid; // UUID proveniente do Auctoritas
+    private UUID authUuid; // UUID proveniente do Auctoritas
 
     @ManyToOne
     @JoinColumn(name = "cargo_uuid", referencedColumnName = "uuid", nullable = false)
@@ -33,7 +34,7 @@ public class UsuarioPerfil implements Serializable {
     public UsuarioPerfil() {
     }
 
-    public UsuarioPerfil(String authUuid, Cargo cargo) {
+    public UsuarioPerfil(UUID authUuid, Cargo cargo) {
         this.authUuid = authUuid;
         this.cargo = cargo;
     }
@@ -46,13 +47,13 @@ public class UsuarioPerfil implements Serializable {
         this.id = id;
     }
 
-    public String getAuthUuid() {
+    public UUID getAuthUuid() {
         return authUuid;
     }
 
-    public void setAuthUuid(String authUuid) {
+    public void setAuthUuid(UUID authUuid) {
         this.authUuid = authUuid;
-    }
+    }           
 
     public Cargo getCargo() {
         return cargo;
@@ -82,6 +83,6 @@ public class UsuarioPerfil implements Serializable {
             return false;
         UsuarioPerfil other = (UsuarioPerfil) obj;
         return Objects.equals(authUuid, other.authUuid);
-    }           
+    }
     
 }
