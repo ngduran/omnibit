@@ -10,7 +10,10 @@ public record UsuarioPerfilDTO(
         UUID authUuid,
 
         @NotNull(message = "O UUID do cargo é obrigatório")
-        UUID cargoUuid
+        UUID cargoUuid,
+
+        @NotNull(message = "O UUID da pastoral é obrigatório")
+        UUID pastoralUuid
 
     )
 {}

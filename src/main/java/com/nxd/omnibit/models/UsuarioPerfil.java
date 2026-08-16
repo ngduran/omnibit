@@ -30,13 +30,19 @@ public class UsuarioPerfil implements Serializable {
     @JoinColumn(name = "cargo_uuid", referencedColumnName = "uuid", nullable = false)
     private Cargo cargo;
 
+    @ManyToOne
+    @JoinColumn(name = "pastoral_uuid", referencedColumnName = "uuid", nullable = false)
+    private Pastoral pastoral;
+
+
     @Deprecated
     public UsuarioPerfil() {
     }
 
-    public UsuarioPerfil(UUID authUuid, Cargo cargo) {
+    public UsuarioPerfil(UUID authUuid, Cargo cargo, Pastoral pastoral) {
         this.authUuid = authUuid;
         this.cargo = cargo;
+        this.pastoral = pastoral;
     }
 
     public Long getId() {
@@ -61,6 +67,14 @@ public class UsuarioPerfil implements Serializable {
 
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
+    }
+
+    public Pastoral getPastoral() {
+        return pastoral;
+    }
+
+    public void setPastoral(Pastoral pastoral) {
+        this.pastoral = pastoral;
     }
 
     @Override
