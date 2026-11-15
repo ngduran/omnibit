@@ -35,7 +35,7 @@ public class UsuarioPerfilController {
 
     public UsuarioPerfilController(
         UsuarioPerfilService usuarioPerfilService,
-        @Value("${omnibit.integration.api-key}") String integrationApiKey) {
+        @Value("${OMNIBIT_INTEGRATION_API_KEY}") String integrationApiKey) {
 
         this.usuarioPerfilService = usuarioPerfilService;
 
