@@ -18,5 +18,7 @@ public interface UsuarioPerfilRepository extends JpaRepository<UsuarioPerfil, Lo
 
     @Query("SELECT up FROM UsuarioPerfil up JOIN FETCH up.cargo")
     List<UsuarioPerfil> findAllWithCargo();
+    
+    Optional<UsuarioPerfil> findByTokenConvite(String tokenConvite);
 
 }

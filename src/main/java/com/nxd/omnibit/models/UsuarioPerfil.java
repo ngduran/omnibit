@@ -23,8 +23,8 @@ public class UsuarioPerfil implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "auth_uuid", unique = true, nullable = false, updatable = false, columnDefinition = "BINARY(16)")
-    private UUID authUuid; // UUID proveniente do Auctoritas
+    @Column(name = "auth_uuid", unique = true, nullable = true, columnDefinition = "BINARY(16)")
+    private UUID authUuid;
 
     @ManyToOne
     @JoinColumn(name = "cargo_uuid", referencedColumnName = "uuid", nullable = false)
@@ -34,6 +34,8 @@ public class UsuarioPerfil implements Serializable {
     @JoinColumn(name = "pastoral_uuid", referencedColumnName = "uuid", nullable = false)
     private Pastoral pastoral;
 
+    @Column(name = "token_convite", unique = true, length = 8)
+    private String tokenConvite;
 
     @Deprecated
     public UsuarioPerfil() {
@@ -77,14 +79,28 @@ public class UsuarioPerfil implements Serializable {
         this.pastoral = pastoral;
     }
 
+    public String getTokenConvite() {
+        return tokenConvite;
+    }
+
+    public void setTokenConvite(String tokenConvite) {
+        this.tokenConvite = tokenConvite;
+    }
+
     @Override
     public String toString() {
-        return "UsuarioPerfil [id=" + id + ", authUuid=" + authUuid + ", cargo=" + cargo + "]";
+        return "UsuarioPerfil [id=" + id + ", authUuid=" + authUuid + ", cargo=" + cargo + ", pastoral=" + pastoral
+                + ", tokenConvite=" + tokenConvite + "]";
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(authUuid);
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((cargo == null) ? 0 : cargo.hashCode());
+        result = prime * result + ((pastoral == null) ? 0 : pastoral.hashCode());
+        result = prime * result + ((tokenConvite == null) ? 0 : tokenConvite.hashCode());
+        return result;
     }
 
     @Override
@@ -96,7 +112,22 @@ public class UsuarioPerfil implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         UsuarioPerfil other = (UsuarioPerfil) obj;
-        return Objects.equals(authUuid, other.authUuid);
+        if (cargo == null) {
+            if (other.cargo != null)
+                return false;
+        } else if (!cargo.equals(other.cargo))
+            return false;
+        if (pastoral == null) {
+            if (other.pastoral != null)
+                return false;
+        } else if (!pastoral.equals(other.pastoral))
+            return false;
+        if (tokenConvite == null) {
+            if (other.tokenConvite != null)
+                return false;
+        } else if (!tokenConvite.equals(other.tokenConvite))
+            return false;
+        return true;
     }
-    
+   
 }
